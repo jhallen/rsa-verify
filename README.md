@@ -3,13 +3,13 @@
 Here is the signature verification code extracted from the Chrome OS
 verified boot system "vboot".  This is convenient source code for adding
 RSA-based signature verification to an embedded system.  For example, this
-could be used to verify a firmware update against an embedded public key
-before allowing the update to proceed.
+code could be used to verify a firmware update against an embedded public
+key before allowing the update to proceed.
 
 The RSA and SHA256 routines work well on small ARM microcontrollers.
 
-First, get and build the vboot code for its "futility" utility and compile
-it for Linux.  You can get it here:
+First, get and build the Chrome OS vboot code for its "futility" utility and
+compile it for Linux.  You can get it here:
 
 [https://chromium.googlesource.com/chromiumos/platform/vboot/+/refs/heads/master](https://chromium.googlesource.com/chromiumos/platform/vboot/+/refs/heads/master)
 
@@ -30,7 +30,7 @@ bootloader.  Verify an example signature like this:
 
 	./verify test/data
 
-Here is the procedure to sign your own firmware:
+Here is the procedure to sign your own data:
 
 Create a private key "key.pem", don't share this:
 
@@ -56,3 +56,9 @@ should be transported along with the "data".
 You can verify the signature using the public key using like this:
 
 	../_vboot_reference/build/futility/futility verify --type rwsig --pubkey key.vbpubk2 -f data sig
+
+You can use xxd to convert "sig" and "key.vbpubk2" into a C literal for
+inclusion into main.c:
+
+	xxd --include sig
+	xxd --include key.vbpubk2
