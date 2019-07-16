@@ -26,9 +26,10 @@ Next, build the signature verification code here, just type:
 
 Main.c is an example of how to use the code.  A signature and public key
 are included in main.c.  In your case, you would put this code into your own
-bootloader.  Verify an example signature like this:
+bootloader.  Verify the example signature like this:
 
 	./verify test/data
+	Signature matches!
 
 Here is the procedure to sign your own data:
 
