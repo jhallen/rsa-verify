@@ -63,3 +63,8 @@ inclusion into main.c:
 
 	xxd --include sig
 	xxd --include key.vbpubk2
+
+Note that the vb21_struct.h signature format supports many Chrome-specific
+file formats as well as more complex key handling.  Take a look at "futility
+sign help".  Anyway, the "rwsig" type seems to be the simplest and would
+covers many microcontroller use cases.
