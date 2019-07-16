@@ -1,1 +1,58 @@
-# rsa-verify
+# Signature verification for embedded systems
+
+Here is the signature verification code extracted from the Chrome OS
+verified boot system "vboot".  This is convenient source code for adding
+RSA-based signature verification to an embedded system.  For example, this
+could be used to verify a firmware update against an embedded public key
+before allowing the update to proceed.
+
+The RSA and SHA256 routines work well on small ARM microcontrollers.
+
+First, get and build the vboot code for its "futility" utility and compile
+it for Linux.  You can get it here:
+
+[https://chromium.googlesource.com/chromiumos/platform/vboot/+/refs/heads/master](https://chromium.googlesource.com/chromiumos/platform/vboot/+/refs/heads/master)
+
+Build it as follows:
+
+	gunzip <vboot-master.tar.gz | tar -xf -
+	cd _vboot_reference
+	make
+	cd ..
+
+Next, build the signature verification code here, just type:
+
+	make
+
+Main.c is an example of how to use the code.  A signature and public key
+are included in main.c.  In your case, you would put this code into your own
+bootloader.  Verify an example signature like this:
+
+	./verify test/data
+
+Here is the procedure to sign your own firmware:
+
+Create a private key "key.pem", don't share this:
+
+	cd test
+	openssl genrsa -F4 -out key.pem 2048
+
+Create key pair from .pem in "vb21_struct.h" format:
+
+	../_vboot_reference/build/futility/futility create key.pem
+
+	this generates: key.vbprik2 and key.vbpubk2
+
+Don't share key.vbprik2.  The public key "key.vbpubk2" needs to be included
+with your code.
+
+Sign some binary data:
+
+	../_vboot_reference/build/futility/futility sign --type rwsig --prikey key.vbprik2 data sig
+
+This generates the signature for "data" in a file "sig".  The signature
+should be transported along with the "data".
+
+You can verify the signature using the public key using like this:
+
+	../_vboot_reference/build/futility/futility verify --type rwsig --pubkey key.vbpubk2 -f data sig
