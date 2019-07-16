@@ -3,10 +3,18 @@
 Here is the signature verification code extracted from the Chrome OS
 verified boot system "vboot".  This is small convenient source code for
 adding RSA-based signature verification to an embedded system.  For example,
-this code could be used to verify a firmware update against an embedded
+this code could be used to verify signed firmware update against an embedded
 public key before allowing the update to proceed.
 
-The RSA and SHA256 routines work well on small ARM microcontrollers.
+The RSA and SHA256 routines work well on small ARM microcontrollers.  For
+example it's used in the embedded controller ("EC") found in Chromebooks:
+
+[https://chromium.googlesource.com/chromiumos/platform/ec/+/refs/heads/master](https://chromium.googlesource.com/chromiumos/platform/ec/+/refs/heads/master)
+
+(The EC is an interesting project all on its own.  It has a small
+multi-tasking OS built-in).
+
+# Instructions
 
 First, get and build the Chrome OS vboot code for its "futility" utility and
 compile it for Linux.  You can get it here:
