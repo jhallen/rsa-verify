@@ -1,10 +1,10 @@
 # Signature verification for embedded systems
 
 Here is the signature verification code extracted from the Chrome OS
-verified boot system "vboot".  This is convenient source code for adding
-RSA-based signature verification to an embedded system.  For example, this
-code could be used to verify a firmware update against an embedded public
-key before allowing the update to proceed.
+verified boot system "vboot".  This is small convenient source code for
+adding RSA-based signature verification to an embedded system.  For example,
+this code could be used to verify a firmware update against an embedded
+public key before allowing the update to proceed.
 
 The RSA and SHA256 routines work well on small ARM microcontrollers.
 
